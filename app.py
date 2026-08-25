@@ -2,14 +2,14 @@ from flask import Flask,render_template,request
 import joblib
 from pymongo import MongoClient
 
-model_file_path = "./models/randomforest.lb"
+model_file_path = "./models/decisiontree.lb"
 #model_file_path =  r'C:\Users\Ranjit\Desktop\15 July\customer_satifaction\models\logisticregre.lb'
 model =  joblib.load(model_file_path)
 
-connection_string="mongodb+srv://abhipsasri8183:fccv5v9jXuJIs4W6@cluster1.b94xm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1"
-client=MongoClient(connection_string)
-database=client['Customer'] #-->database
-collection=database["CustomerData"] #table create or collection
+# connection_string="mongodb+srv://abhipsasri8183:fccv5v9jXuJIs4W6@cluster1.b94xm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1"
+# client=MongoClient(connection_string)
+# database=client['Customer'] #-->database
+# collection=database["CustomerData"] #table create or collection
 
 app=Flask(__name__)
 
@@ -62,8 +62,8 @@ def  predict():
         # return label_dict[PREDICTION]
         data={'age':age,'flight_distance':flight_distance,'inflight_entertainment':inflight_entertainment,'baggage_handling':baggage_handling,'cleanliness':cleanliness,
               'departure_delay':departure_delay,'arrival_delay':arrival_delay,'gender':gender,'customer_type':customer_type,'travel_type':travel_type,'class_type':class_type}
-        data_id=collection.insert_one(data).inserted_id
-        print("your data is inserted into the database:",data_id)
+        # data_id=collection.insert_one(data).inserted_id
+        # print("your data is inserted into the database:",data_id)
         return render_template('output.html',output=label_dict[PREDICTION])
 
 if __name__=="__main__":
